@@ -133,7 +133,7 @@ public:
 
         fileInfo.info_set_int("fis_control_rate", _CSound._ControlRate);
         fileInfo.info_set_int("fis_channel_count", _CSound._ChannelCount);
-        fileInfo.info_set_int("fis_0dbfs_level", _CSound._0dBFSLevel);
+        fileInfo.info_set_int("fis_0dbfs_level", (int64_t) _CSound._0dBFSLevel);
 /*
         // Meta data tags
         fileInfo.meta_add("title", _Decoder->GetTitle());

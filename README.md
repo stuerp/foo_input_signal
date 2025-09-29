@@ -97,7 +97,7 @@ To create the component build the x64 configuration.
 
 ## Change Log
 
-v0.1.0.0-alpha1, 2025-xx-xx
+v0.1.0.0, 2025-09-29
 
 - Initial version
 
@@ -122,6 +122,7 @@ You can read the full history [here](docs/History.md).
 - Home page: [https://github.com/stuerp/foo_input_signal](https://github.com/stuerp/foo_input_signal)
 - Repository: [https://github.com/stuerp/foo_input_signal.git](https://github.com/stuerp/foo_input_signal.git)
 - Issue tracker: [https://github.com/stuerp/foo_input_signal/issues](https://github.com/stuerp/foo_input_signal/issues)
+- Forum: [foo_input_signal](https://hydrogenaudio.org/index.php/topic,128515)
 
 ## License
 
