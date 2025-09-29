@@ -20,7 +20,6 @@ void csound_t::Load(const std::string & content)
 
     _CSound.SetOutput("null", "raw", "double");     // Override the output defined in the script.
 
-    _Length = _CSound.GetScoreTime();
     _SampleRate = (uint32_t) _CSound.GetSr();       // Number of audio samples in one second.
     _ControlRate = (uint32_t) _CSound.GetKr();      // Number of samples in one control period (k-rate).
     _ChannelCount =  _CSound.GetNchnls();           // Number of audio output channels.

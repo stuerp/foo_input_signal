@@ -5,11 +5,11 @@
 
 ## Features
 
-- Supports foobar2000 2.0 and later (32-bit and 64-bit version).
+- Uses Csound Document (CSD) files to generate a signal.
 
 ## Requirements
 
-- Tested on [foobar2000](https://www.foobar2000.org/download) v2.0 or later (32 or 64-bit). ![foobar2000](https://www.foobar2000.org/button-small.png)
+- Tested on [foobar2000](https://www.foobar2000.org/download) v2.0 or later (64-bit only). ![foobar2000](https://www.foobar2000.org/button-small.png)
 - Tested on Microsoft Windows 10 and later.
 
 ## Getting started
@@ -41,7 +41,6 @@ To create the deployment package you need:
 
 Create the following directory structure:
 
-    3rdParty
     bin
     bin.x86
     foo_input_signal
@@ -60,7 +59,7 @@ Open `foo_input_signal.sln` with Visual Studio and build the solution.
 
 ### Packaging
 
-To create the component first build the x86 configuration and next the x64 configuration.
+To create the component build the x64 configuration.
 
 ## Change Log
 
@@ -73,6 +72,7 @@ You can read the full history [here](docs/History.md).
 ## Acknowledgements / Credits
 
 - Peter Pawlowski for the [foobar2000](https://www.foobar2000.org/) audio player. ![foobar2000](https://www.foobar2000.org/button-small.png)
+- The [Csound team](https://github.com/orgs/csound/people) for [Csound](https://csound.com/index.html).
 
 ## Reference Material
 

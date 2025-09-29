@@ -10,7 +10,7 @@
 class csound_t
 {
 public:
-    csound_t() noexcept : _Length(), _SampleRate(), _ControlRate(), _ChannelCount(), _FrameSize() { }
+    csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _FrameSize() { }
 
     void Load(const std::string & content);
 
@@ -26,7 +26,6 @@ public:
     }
 
 public:
-    double _Length;
     uint32_t _SampleRate;
     uint32_t _ControlRate;
     uint32_t _ChannelCount;

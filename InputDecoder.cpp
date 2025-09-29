@@ -1,5 +1,5 @@
  
-/** $VER: InputDecoder.cpp (2025.09.28) P. Stuer **/
+/** $VER: InputDecoder.cpp (2025.09.29) P. Stuer **/
 
 #include "pch.h"
 
@@ -126,12 +126,14 @@ public:
     /// </summary>
     void get_info(t_uint32, file_info & fileInfo, abort_callback &)
     {
-        double Length = _CSound._Length / 1000.;
-
-        fileInfo.set_length(Length);
+        fileInfo.set_length(0.); // Sets audio duration, in seconds (infinite)
 
         // General info tags
         fileInfo.info_set("encoding", "Synthesized");
+
+        fileInfo.info_set_int("fis_control_rate", _CSound._ControlRate);
+        fileInfo.info_set_int("fis_channel_count", _CSound._ChannelCount);
+        fileInfo.info_set_int("fis_0dbfs_level", _CSound._0dBFSLevel);
 /*
         // Meta data tags
         fileInfo.meta_add("title", _Decoder->GetTitle());
@@ -226,7 +228,7 @@ public:
         if (!_IsDynamicInfoSet)
         {
             fileInfo.info_set_int("sample_rate", _CSound._SampleRate);
-            fileInfo.info_set_int("control_rate", _CSound._ControlRate);
+
 //          fileInfo.info_set_bitrate(((t_int64) _Decoder->GetBitsPerSample() * _Decoder->GetChannelCount() * _SynthesisRate + 500 /* rounding for bps to kbps*/) / 1000 /* bps to kbps */);
 
             _IsDynamicInfoSet = true;
@@ -269,6 +271,6 @@ private:
 #pragma warning(default: 4820) // x bytes padding added after last data member
 
 // Declare the supported file types to make it show in "open file" dialog etc.
-DECLARE_FILE_TYPE("CSound (CSD) files", "*.csd");
+DECLARE_FILE_TYPE("Csound Documents (CSD)", "*.csd");
 
 static input_factory_t<InputDecoder> _InputDecoderFactory;
