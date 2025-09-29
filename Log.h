@@ -1,5 +1,5 @@
 
-/** $VER: Log.h (2025.09.21) **/
+/** $VER: Log.h (2025.09.29) **/
 
 #pragma once
 
@@ -39,6 +39,7 @@ public:
     virtual ILog & AtDebug() noexcept = 0;
     virtual ILog & AtTrace() noexcept = 0;
     virtual ILog & Write(const char * format, ... ) noexcept = 0;
+    virtual ILog & Write(const char * format, va_list args) noexcept = 0;
 };
 
 extern ILog & Log;

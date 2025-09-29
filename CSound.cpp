@@ -1,22 +1,55 @@
 
-/** $VER: CSound.cpp (2025.09.28) P. Stuer - CSound wrapper **/
+/** $VER: CSound.cpp (2025.09.29) P. Stuer - CSound wrapper **/
 
 #include "pch.h"
 
-#include "csound.h"
+#include "CSound.h"
+
 #include "Resources.h"
+#include "Log.h"
+
+/// <summary>
+/// Initializes this instance.
+/// </summary>
+csound_t::csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _FrameSize()
+{
+    _CSound.SetHostData(this);
+
+    _CSound.SetMessageLevel(0); // All messages
+
+    _CSound.SetMessageCallback([](CSOUND * csound, int attr, const char * format, va_list args)
+    {
+        auto This = (csound_t *) ::csoundGetHostData(csound);
+
+        char Part[1024] = { };
+
+        (void) ::vsnprintf(Part, sizeof(Part) - 1, format, args);
+
+        for (const char c : Part)
+        {
+            if (c == '\0')
+                break;
+
+            if (c == '\n')
+            {
+                Log.AtInfo().Write("Csound: %s", This->_Line.c_str());
+                This->_Line.clear();
+            }
+            else
+                This->_Line += c;
+        }
+    });
+}
 
 /// <summary>
 /// Loads and compiles a CSD file.
 /// </summary>
 void csound_t::Load(const std::string & content)
 {
-    _CSound.Reset();
-
     int Result = _CSound.CompileCsdText(content.c_str());
 
     if (Result != CSOUND_SUCCESS)
-        throw exception_io();
+        throw exception_io("Failed to compile Csound Document");
 
     _CSound.SetOutput("null", "raw", "double");     // Override the output defined in the script.
 
@@ -44,6 +77,13 @@ void csound_t::Stop() noexcept
     _CSound.Cleanup();
 
     _CSound.Stop();
+    _CSound.Reset();
+
+    if (!_Line.empty())
+    {
+        Log.AtInfo().Write("Csound: %s", _Line.c_str());
+        _Line.clear();
+    }
 }
 
 /// <summary>

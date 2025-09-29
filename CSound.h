@@ -1,5 +1,5 @@
  
-/** $VER: CSound.cpp (2025.09.28) P. Stuer - CSound wrapper **/
+/** $VER: CSound.cpp (2025.09.29) P. Stuer - CSound wrapper **/
 
 #pragma once
 
@@ -10,7 +10,8 @@
 class csound_t
 {
 public:
-    csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _FrameSize() { }
+    csound_t() noexcept;
+    virtual ~csound_t() { }
 
     void Load(const std::string & content);
 
@@ -35,4 +36,6 @@ public:
 
 private:
     Csound _CSound;
+
+    std::string _Line;
 };

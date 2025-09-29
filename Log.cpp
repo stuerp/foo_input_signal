@@ -1,5 +1,5 @@
 
-/** $VER: Log.cpp (2025.07.13) P. Stuer - Another logger implementation **/
+/** $VER: Log.cpp (2025.09.29) P. Stuer - Another logger implementation **/
 
 #include "pch.h"
 
@@ -27,6 +27,7 @@ public:
     ILog & AtDebug() noexcept override final { return *this; }
     ILog & AtTrace() noexcept override final { return *this; }
     ILog & Write(const char * format, ... ) noexcept override final { return *this; }
+    ILog & Write(const char * format, va_list args) noexcept override final { return *this; }
 };
 
 ILog & Null = *new NullLog();
@@ -96,6 +97,13 @@ public:
         va_list args;
 
         va_start(args, format);
+
+        return Write(format, args);
+    }
+
+    ILog & Write(const char * format, va_list args) noexcept override final
+    {
+        char Line[1024] = { };
 
         (void) ::vsnprintf(Line, sizeof(Line) - 1, format, args);
         console::print(Line);
