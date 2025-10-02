@@ -91,33 +91,40 @@ void csound_t::Stop() noexcept
 /// </summary>
 bool csound_t::Render(audio_chunk & audioChunk) noexcept
 {
-    if (_CSound.PerformKsmps() != CSOUND_SUCCESS)
-        return false;
+    bool KeepRendering = true;
 
-    const uint32_t FrameCount = 4096;
+    const size_t FramesPerControlCycle = _CSound.GetKsmps(); // Audio frames per control cycle.
+    const size_t FrameCount = ((512 / FramesPerControlCycle) + 1) * FramesPerControlCycle; // Make sure the audio chunk is large enough to hold all samples of a control cycle.
 
     audioChunk.set_data_size((t_size) FrameCount * _ChannelCount);
 
     audio_sample * FrameData = audioChunk.get_data();
+    size_t FramesRendered = 0;
 
-    const size_t FramesToRender = _CSound.GetKsmps(); // Audio frames per control sample.
-    const size_t SamplesToRender = FramesToRender * _ChannelCount;
-
-    for (int i = 0; i < SamplesToRender; ++i)
+    while (FramesRendered < FrameCount)
     {
-        for (int j = 0; j < (int) _ChannelCount; ++j)
+        if (_CSound.PerformKsmps() != CSOUND_SUCCESS)
         {
-            const MYFLT Sample = _CSound.GetSpoutSample(i, j);
-
-            *FrameData++ = Sample;
+            KeepRendering = false;
+            break;
         }
-    }
 
-    size_t FramesRendered = FramesToRender;
+        for (int i = 0; i < FramesPerControlCycle; ++i)
+        {
+            for (int j = 0; j < (int) _ChannelCount; ++j)
+            {
+                const MYFLT Sample = _CSound.GetSpoutSample(i, j);
+
+                *FrameData++ = Sample;
+            }
+        }
+
+        FramesRendered += FramesPerControlCycle;
+    }
 
     audioChunk.set_srate(_SampleRate);
     audioChunk.set_channels(_ChannelCount);
     audioChunk.set_sample_count(FramesRendered);
 
-   return true;
+   return KeepRendering;
 }

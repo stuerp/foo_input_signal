@@ -182,11 +182,14 @@ public:
     #pragma endregion
 
     #pragma region input_decoder
-    /// <summary>
+
+/// <summary>
     /// Initializes the decoder before playing the specified subsong. Resets playback position to the beginning of specified subsong.
     /// </summary>
     void decode_initialize(unsigned, unsigned, abort_callback & abortHandler)
     {
+        abortHandler.check();
+
         _File->reopen(abortHandler); // Equivalent to seek to zero, except it also works on nonseekable streams
 
         _CSound.Start();
