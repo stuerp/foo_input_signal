@@ -7,7 +7,7 @@ The intended usage is to generate script-based audio signals to test other fooba
 
 ## Features
 
-- Uses Csound Document (CSD) files to generate a signal.
+- Uses Csound Document (CSD) files to generate a signal. (Csound 6.18.1)
 
 ## Requirements
 
