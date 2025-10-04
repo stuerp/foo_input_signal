@@ -7,7 +7,7 @@ The intended usage is to generate script-based audio signals to test other fooba
 
 ## Features
 
-- Uses Csound Document (CSD) files to generate a signal. (Csound 6.18.1)
+- Uses Csound Document (CSD) files to generate a signal. (Csound 7.0.0-beta9)
 
 ## Requirements
 
@@ -97,9 +97,10 @@ To create the component build the x64 configuration.
 
 ## Change Log
 
-v0.2.0.0, 2025-xx-xx
+v0.2.0.0, 2025-10-04
 
 - New: Csound output and output of CSD print opcodes are captured and displayed in the foobar2000 console.
+- New: Upgraded to Csound 7.0.0.
 
 You can read the full history [here](docs/History.md).
 

@@ -1,5 +1,5 @@
 
-/** $VER: CSound.cpp (2025.09.29) P. Stuer - CSound wrapper **/
+/** $VER: CSound.cpp (2025.10.04) P. Stuer - CSound wrapper **/
 
 #include "pch.h"
 
@@ -11,8 +11,10 @@
 /// <summary>
 /// Initializes this instance.
 /// </summary>
-csound_t::csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _FrameSize()
+csound_t::csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _SrcData()
 {
+    static_assert(sizeof(audio_sample) == sizeof(MYFLT), "sizeof(audio_sample) != sizeof(MYFLT)");
+
     _CSound.SetHostData(this);
 
     _CSound.SetMessageLevel(0); // All messages
@@ -46,19 +48,26 @@ csound_t::csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), 
 /// </summary>
 void csound_t::Load(const std::string & content)
 {
-    int Result = _CSound.CompileCsdText(content.c_str());
+    int Result = _CSound.SetOption("-o null");      // Override the output option in the CSD.
+
+    if (Result != CSOUND_SUCCESS)
+        throw exception_io("Failed to set Csound option");
+
+    Result = _CSound.CompileCSD(content.c_str(), 1, 0);
 
     if (Result != CSOUND_SUCCESS)
         throw exception_io("Failed to compile Csound Document");
 
-    _CSound.SetOutput("null", "raw", "double");     // Override the output defined in the script.
-
     _SampleRate = (uint32_t) _CSound.GetSr();       // Number of audio samples in one second.
     _ControlRate = (uint32_t) _CSound.GetKr();      // Number of samples in one control period (k-rate).
-    _ChannelCount =  _CSound.GetNchnls();           // Number of audio output channels.
+    _ChannelCount =  _CSound.GetChannels(0);        // Number of audio output channels.
     _0dBFSLevel = _CSound.Get0dBFS();               // 0dBFS level of the spIn/spOut buffers.
 
-    _FrameSize  = _ControlRate * _ChannelCount;
+    _FramesPerControlCycle  = _CSound.GetKsmps();
+    _SamplesPerControlCycle = _FramesPerControlCycle * _ChannelCount;
+
+    // Make sure the audio chunk is large enough to hold all samples of a control cycle.
+    _FramesPerChunk = ((512 + _FramesPerControlCycle - 1) / _FramesPerControlCycle) * _FramesPerControlCycle;
 }
 
 /// <summary>
@@ -67,6 +76,8 @@ void csound_t::Load(const std::string & content)
 void csound_t::Start() noexcept
 {
     _CSound.Start();
+
+    _SrcData = _CSound.GetSpout();
 }
 
 /// <summary>
@@ -74,9 +85,8 @@ void csound_t::Start() noexcept
 /// </summary>
 void csound_t::Stop() noexcept
 {
-    _CSound.Cleanup();
+    _SrcData = nullptr;
 
-    _CSound.Stop();
     _CSound.Reset();
 
     if (!_Line.empty())
@@ -91,40 +101,40 @@ void csound_t::Stop() noexcept
 /// </summary>
 bool csound_t::Render(audio_chunk & audioChunk) noexcept
 {
+    if (_SrcData == nullptr)
+        return false;
+
     bool KeepRendering = true;
 
-    const size_t FramesPerControlCycle = _CSound.GetKsmps(); // Audio frames per control cycle.
-    const size_t FrameCount = ((512 / FramesPerControlCycle) + 1) * FramesPerControlCycle; // Make sure the audio chunk is large enough to hold all samples of a control cycle.
+    audioChunk.set_data_size((t_size) (_FramesPerChunk + 1) * _ChannelCount); // Set the number of samples in the audio chunk. Add room for 1 extra frame of silence.
 
-    audioChunk.set_data_size((t_size) FrameCount * _ChannelCount);
+    audio_sample * DstData = audioChunk.get_data();
 
-    audio_sample * FrameData = audioChunk.get_data();
     size_t FramesRendered = 0;
 
-    while (FramesRendered < FrameCount)
+    while (FramesRendered < _FramesPerChunk)
     {
-        if (_CSound.PerformKsmps() != CSOUND_SUCCESS)
+        auto Result = _CSound.PerformKsmps();
+
+        ::memcpy(DstData,_SrcData, _SamplesPerControlCycle * sizeof(*DstData));
+
+        DstData        += _SamplesPerControlCycle;
+        FramesRendered += _FramesPerControlCycle;
+
+        if (Result != CSOUND_SUCCESS)
         {
+            // Add one frame of silence.
+            ::memset(DstData, 0, _ChannelCount * sizeof(*DstData));
+            ++FramesRendered;
+
             KeepRendering = false;
             break;
         }
-
-        for (int i = 0; i < FramesPerControlCycle; ++i)
-        {
-            for (int j = 0; j < (int) _ChannelCount; ++j)
-            {
-                const MYFLT Sample = _CSound.GetSpoutSample(i, j);
-
-                *FrameData++ = Sample;
-            }
-        }
-
-        FramesRendered += FramesPerControlCycle;
     }
 
     audioChunk.set_srate(_SampleRate);
-    audioChunk.set_channels(_ChannelCount);
-    audioChunk.set_sample_count(FramesRendered);
+    audioChunk.set_channels(_ChannelCount);         // Set the number of channels in the audio chunk.
+    audioChunk.set_sample_count(FramesRendered);    // Set the number of samples per channel in the audio chunk (= number of frames).
 
    return KeepRendering;
 }

@@ -44,7 +44,8 @@ Write-Host "Copying shared component files to the package directory...";
 $PackagePath = "..\out\$TargetName";
 
 $SharedFiles = @(
-    "3rdParty\csound\build\Release\csound64.dll"
+#   "3rdParty\csound\build\Release\csound64.dll"
+    "c:\Program Files\Csound7\bin\csound64.dll"
 );
 
 $SharedFiles | ForEach-Object {

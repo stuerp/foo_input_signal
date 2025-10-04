@@ -65,4 +65,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\..\..\..\..\..\Program Files\Csound7\bin\csound64.dll" />
+  </ItemGroup>
 </Project>

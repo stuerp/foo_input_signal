@@ -1,5 +1,5 @@
  
-/** $VER: CSound.cpp (2025.09.29) P. Stuer - CSound wrapper **/
+/** $VER: CSound.cpp (2025.10.04) P. Stuer - CSound wrapper **/
 
 #pragma once
 
@@ -32,10 +32,13 @@ public:
     uint32_t _ChannelCount;
     double _0dBFSLevel;
 
-    uint32_t _FrameSize;
+    size_t _FramesPerControlCycle;  // Number of audio frames per control cycle.
+    size_t _SamplesPerControlCycle; // Number of samples per control cycle.
+    size_t _FramesPerChunk;
 
 private:
     Csound _CSound;
 
     std::string _Line;
+    const MYFLT * _SrcData;
 };
