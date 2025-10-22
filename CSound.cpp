@@ -58,12 +58,12 @@ void csound_t::Load(const std::string & content)
     if (Result != CSOUND_SUCCESS)
         throw exception_io("Failed to compile Csound Document");
 
-    _SampleRate = (uint32_t) _CSound.GetSr();       // Number of audio samples in one second.
-    _ControlRate = (uint32_t) _CSound.GetKr();      // Number of samples in one control period (k-rate).
-    _ChannelCount =  _CSound.GetChannels(0);        // Number of audio output channels.
-    _0dBFSLevel = _CSound.Get0dBFS();               // 0dBFS level of the spIn/spOut buffers.
+    _SampleRate = (uint32_t) _CSound.GetSr();           // Number of audio samples in one second.
+    _ControlRate = (uint32_t) _CSound.GetKr();          // Number of samples in one control period (k-rate).
+    _ChannelCount = (uint32_t) _CSound.GetChannels(0);  // Number of audio output channels.
+    _0dBFSLevel = _CSound.Get0dBFS();                   // 0dBFS level of the spIn/spOut buffers.
 
-    _FramesPerControlCycle  = _CSound.GetKsmps();
+    _FramesPerControlCycle  = (size_t) _CSound.GetKsmps();
     _SamplesPerControlCycle = _FramesPerControlCycle * _ChannelCount;
 
     // Make sure the audio chunk is large enough to hold all samples of a control cycle.
