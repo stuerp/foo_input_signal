@@ -1,7 +1,7 @@
 /*
-    find_opcode.h:
+    float-version.h:
 
-    Copyright (C) 2016 by John ffitc
+    Copyright (C) 1991-2010 Victor Lazzarini
 
     This file is part of Csound.
 
@@ -20,16 +20,16 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
     02110-1301 USA
 */
-#ifndef _FIND_OPCODE_H_
-#define _FIND_OPCODE_H_
 
-char* get_opcode_short_name(CSOUND* csound, char* opname);
+/* this file can be copied as float-version.h in installers for double precision
+   currently implemented only for OSX
+*/
 
-PUBLIC OENTRY* find_opcode_new(CSOUND* csound, char* opname,
-                               char* outArgsFound, char* inArgsFound);
-PUBLIC OENTRY* find_opcode_exact(CSOUND* csound, char* opname,
-                               char* outArgsFound, char* inArgsFound);
-/* find OENTRY with the specified name in opcode list */
+#ifndef FLOAT_VERSION_H
+#define FLOAT_VERSION_H
 
-OENTRY* find_opcode(CSOUND *, char *);
+#if !defined(USE_DOUBLE)
+#define USE_DOUBLE
+#endif
+
 #endif

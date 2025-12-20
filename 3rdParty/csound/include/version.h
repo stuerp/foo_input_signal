@@ -25,7 +25,7 @@
 #define CSOUND_VERSION_H
 
 /* Version string generated from CMake variables */
-#define VERSION "6.18"
+#define VERSION "7.0"
 
 /* Define to the full name of this package. */
 #define CS_PACKAGE_NAME     "Csound"
@@ -38,19 +38,10 @@
 
 /* Define to the version of this package. Generated from CMake variables */
 #define CS_PACKAGE_VERSION  VERSION
-#define CS_VERSION          (6)
-#define CS_SUBVER           (18)
-#define CS_PATCHLEVEL       (1)
-
-
-#define CS_APIVERSION       4   /* should be increased anytime a new version
-                                   contains changes that an older host will
-                                   not be able to handle -- most likely this
-                                   will be a change to an API function or
-                                   the CSOUND struct */
-#define CS_APISUBVER        0   /* for minor changes that will still allow
-                                   compatiblity with older hosts */
-
+#define CS_VERSION          (7)
+#define CS_SUBVER           (0)
+#define CS_PATCHLEVEL       (0)
+  
 #ifndef CS_PACKAGE_DATE
 #define CS_PACKAGE_DATE __DATE__
 #endif
