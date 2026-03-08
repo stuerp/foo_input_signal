@@ -97,10 +97,9 @@ To create the component build the x64 configuration.
 
 ## Change Log
 
-v0.2.0.0, 2025-10-04
+v0.2.1.0, 2026-03-xx
 
-- New: Csound output and output of CSD print opcodes are captured and displayed in the foobar2000 console.
-- New: Upgraded to Csound 7.0.0.
+- New: Upgraded to Csound 7.0.0-beta14.
 
 You can read the full history [here](docs/History.md).
 

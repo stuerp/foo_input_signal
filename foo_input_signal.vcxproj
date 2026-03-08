@@ -39,7 +39,6 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableASAN>true</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -118,12 +117,12 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProgramFiles)\Csound7\include\csound\;$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\libfaust\repo\architecture</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\include\csound</AdditionalIncludeDirectories>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
@@ -134,7 +133,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(Platform).lib;$(SolutionDir)out\$(PlatformTarget)\$(Configuration)\columns_ui_sdk.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(Platform).lib;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\lib\csound.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File Build-FB2KComponent.ps1 $(TargetName) $(TargetFileName) $(Platform) $(OutputPath)</Command>
@@ -150,7 +149,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProgramFiles)\Csound7\include\csound\;$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\libfaust\repo\architecture</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\include\csound</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
@@ -161,7 +160,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(Platform).lib;$(SolutionDir)out\$(PlatformTarget)\$(Configuration)\columns_ui_sdk.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(Platform).lib;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\lib\csound.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File Build-FB2KComponent.ps1 $(TargetName) $(TargetFileName) $(Platform) $(OutputPath)</Command>
@@ -170,12 +169,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>USE_DOUBLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProgramFiles)\Csound7\include\csound\;$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\include\csound</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
@@ -186,7 +185,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(PlatformTarget).lib;$(SolutionDir)out\$(PlatformTarget)\$(Configuration)\columns_ui_sdk.lib;$(ProgramFiles)\Csound7\lib\csound64.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(PlatformTarget).lib;$(ProjectDir)\3rdParty\csound\$(PlatformTarget)\lib\csound64.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File Build-FB2KComponent.ps1 $(TargetName) $(TargetFileName) $(Platform) $(OutputPath)</Command>
@@ -229,7 +228,7 @@
       <PreprocessorDefinitions>USE_DOUBLE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProgramFiles)\Csound7\include\csound\;$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)sdk;$(SolutionDir)sdk\foobar2000;$(SolutionDir)3rdParty\columns_ui_sdk;$(SolutionDir)3rdParty\WTL10_10320\Include;$(ProjectDir);$(ProjectDir)3rdParty\libmsc\include;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\include\csound</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
@@ -240,7 +239,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(PlatformTarget).lib;$(SolutionDir)out\$(PlatformTarget)\$(Configuration)\columns_ui_sdk.lib;$(ProgramFiles)\Csound7\lib\csound64.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)sdk\foobar2000\shared\shared-$(PlatformTarget).lib;$(ProjectDir)3rdParty\csound\$(PlatformTarget)\lib\csound64.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>pwsh.exe -NoLogo -NonInteractive -NoProfile -File Build-FB2KComponent.ps1 $(TargetName) $(TargetFileName) $(Platform) $(OutputPath)</Command>
@@ -287,6 +286,7 @@
     <None Include=".gitignore" />
     <None Include="Build-FB2KComponent.ps1" />
     <None Include="cpp.hint" />
+    <None Include="docs\History.md" />
     <None Include="LICENSE" />
     <None Include="README.md" />
   </ItemGroup>
