@@ -99,7 +99,7 @@ To create the component build the x64 configuration.
 
 v0.2.1.0, 2026-03-xx
 
-- New: Upgraded to Csound 7.0.0-beta14.
+- New: Upgraded to Csound 7.0.0-beta15.
 
 You can read the full history [here](docs/History.md).
 
