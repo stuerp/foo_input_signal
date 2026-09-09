@@ -41,21 +41,10 @@ $null = New-Item -Path '..\out\' -Name "$TargetName\x64" -ItemType 'directory' -
 # Copy the shared x86\x64 files to the package directory.
 Write-Host "Copying shared component files to the package directory...";
 
-$PackagePath = "..\out\$TargetName";
-
 $SharedFiles = @(
-#   "3rdParty\csound\build\Release\csound64.dll"
-    "c:\Program Files\Csound7\bin\csound64.dll"
 );
 
-$SharedFiles | ForEach-Object {
-
-    if (Test-Path -Path $_)
-    {
-        Write-Host "Copying `"$_`" to `"$PackagePath`"...";
-        $null = Copy-Item $_ -Destination $PackagePath -Force;
-    }
-};
+$PackagePath = "..\out\$TargetName";
 
 # Copy the platform-specific files to the package directory.
 if ($Platform -eq 'x64')
@@ -71,6 +60,13 @@ if ($Platform -eq 'x64')
     }
 
     # Copy the platform-specific support files to the package directory (if any).
+    $CSound = '3rdParty\csound\x64\bin\csound64.dll';
+
+    if (Test-Path -Path $CSound)
+    {
+        Write-Host "Copying `"$CSound`" to `"$PackagePath`"...";
+        $null = Copy-Item $CSound -Destination $PackagePath -Force;
+    }
 
     # Install the component in the foobar2000 x64 components directory: "bin\profile\user-components-x64\TargetName"
     Write-Host "Installing $Platform component in foobar2000 64-bit profile...";
@@ -119,6 +115,13 @@ elseif ($Platform -eq 'Win32')
     }
 
     # Copy the platform-specific support files to the package directory (if any).
+    $CSound = '3rdParty\csound\x86\bin\csound.dll';
+
+    if (Test-Path -Path $CSound)
+    {
+        Write-Host "Copying `"$CSound`" to `"$PackagePath`"...";
+        $null = Copy-Item $CSound -Destination $PackagePath -Force;
+    }
 
     # Install the component in the foobar2000 x64 components directory: "..\bin-x86\profile\user-components\TargetName"
     $foobar2000Path = '..\bin.x86';

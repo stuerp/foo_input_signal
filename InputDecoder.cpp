@@ -69,7 +69,7 @@ public:
 
             _File->read_object(Data.get_ptr(), Data.get_size(), abortHandler);
 
-            _Script = Data.get_ptr();
+            _Script.assign(Data.get_ptr(), Data.get_size());
 
             _CSound.Load(_Script);
         }
