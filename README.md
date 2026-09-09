@@ -5,9 +5,11 @@
 
 The intended usage is to generate script-based audio signals to test other foobar2000 components.
 
+![Screenshot](assets/Lissajous.png?raw=true "Examples")
+
 ## Features
 
-- Uses Csound Document (CSD) files to generate a signal. (Csound 7.0.0-beta9)
+- Uses Csound Document (CSD) files to generate a signal.
 
 ## Requirements
 
@@ -97,9 +99,9 @@ To create the component build the x64 configuration.
 
 ## Change Log
 
-v0.2.1.0, 2026-03-xx
+v0.2.1.0, 2026-09-09
 
-- New: Upgraded to Csound 7.0.0-beta15.
+- New: Upgraded to Csound 7.0.0-beta17.
 
 You can read the full history [here](docs/History.md).
 

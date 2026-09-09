@@ -23,6 +23,7 @@
     <None Include="LICENSE" />
     <None Include="README.md" />
     <None Include="docs\History.md" />
+    <None Include="docs\README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
