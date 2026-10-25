@@ -1,5 +1,5 @@
 
-/** $VER: CSound.cpp (2025.10.04) P. Stuer - CSound wrapper **/
+/** $VER: CSound.cpp (2026.10.02) P. Stuer - CSound wrapper **/
 
 #include "pch.h"
 
@@ -13,7 +13,7 @@
 /// </summary>
 csound_t::csound_t() noexcept : _SampleRate(), _ControlRate(), _ChannelCount(), _SrcData()
 {
-    static_assert(sizeof(audio_sample) == sizeof(MYFLT), "sizeof(audio_sample) != sizeof(MYFLT)");
+    static_assert(sizeof(audio_sample) == sizeof(cs_float), "sizeof(audio_sample) != sizeof(cs_float)");
 
     _CSound.SetHostData(this);
 
