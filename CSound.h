@@ -40,5 +40,5 @@ private:
     Csound _CSound;
 
     std::string _Line;
-    const MYFLT * _SrcData;
+    const cs_float * _SrcData;
 };

@@ -14,7 +14,7 @@ The intended usage is to generate script-based audio signals to test other fooba
 ## Requirements
 
 - Tested on [foobar2000](https://www.foobar2000.org/download) v2.0 or later (64-bit only). ![foobar2000](https://www.foobar2000.org/button-small.png)
-- Tested on Microsoft Windows 10 and later.
+- Tested on Microsoft Windows 11.
 
 ## Getting started
 
@@ -99,9 +99,9 @@ To create the component build the x64 configuration.
 
 ## Change Log
 
-v0.2.1.0, 2026-09-09
+v0.2.2.0, 2026-10-25
 
-- New: Upgraded to Csound 7.0.0-beta17.
+- New: Upgraded to Csound 7.0.0.
 
 You can read the full history [here](docs/History.md).
 
